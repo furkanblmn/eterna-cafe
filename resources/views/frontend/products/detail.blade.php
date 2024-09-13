@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', $pageTitle)
+@section('title', $product->title)
 @section('content')
 
     <div class="container detail-container">

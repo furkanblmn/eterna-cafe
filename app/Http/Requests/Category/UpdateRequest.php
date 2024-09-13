@@ -22,8 +22,25 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'], // title zorunlu
-            'file_id' => ['nullable', 'exists:files,id'], // file_id nullable ve files tablosunda bulunmalı
+            'title' => ['required', 'string', 'max:255'],
+            'file_id' => ['exists:files,id'],
+        ];
+    }
+
+    /**
+     * Get custom messages for validation errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Başlık alanı zorunludur.',
+            'title.string' => 'Başlık metin türünde olmalıdır.',
+            'title.max' => 'Başlık en fazla 255 karakter uzunluğunda olabilir.',
+
+            'file_id.required' => 'Dosya seçmek zorunludur.',
+            'file_id.exists' => 'Seçilen dosya mevcut değil.',
         ];
     }
 }

@@ -10,7 +10,6 @@
                             <div class="col-lg-8">
                                 <div class="card">
                                     <div class="card-body">
-                                        <!-- Başlık -->
                                         <div class="row mb-4 align-items-center">
                                             <label class="text-end form-label mb-0 col-lg-3">Başlık</label>
                                             <div class="col-lg-9">
@@ -19,7 +18,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Kategoriler -->
                                         <div class="row mb-4 align-items-center">
                                             <label class="text-end form-label mb-0 col-lg-3">Kategoriler</label>
                                             <div class="col-lg-9">
@@ -30,7 +28,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Fiyat -->
                                         <div class="row mb-4 align-items-center">
                                             <label class="text-end form-label mb-0 col-lg-3">Fiyat</label>
                                             <div class="col-lg-9">
@@ -40,7 +37,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- İçerik -->
                                         <div class="row mb-4 align-items-start">
                                             <label class="text-end form-label mb-0 col-lg-3">İçerik</label>
                                             <div class="col-lg-9">
@@ -55,7 +51,8 @@
                             <div class="col-lg-4">
                                 <div class="card">
                                     <div class="card-body">
-                                        <FileUploader :defaultPreview="product ? product.file.orj_link : ''"
+                                        <FileUploader ref="fileUploader"
+                                            :defaultPreview="product ? product.file.orj_link : ''"
                                             :fileId="form.file_id" @update:fileId="updateFileId" />
                                     </div>
                                 </div>
@@ -142,9 +139,11 @@ export default {
                     this.message = response.data.data.message;
                     this.icon = "success";
 
+
                     if (!this.product) {
                         this.resetForm();
                     }
+
                 })
                 .catch((error) => {
                     this.message = error.response?.data?.message || 'Bilinmeyen bir hata oluştu.';
@@ -164,6 +163,9 @@ export default {
                 price: "",
                 categories: []
             };
+
+            this.updateFileId("");
+            this.$refs.fileUploader.clearFileUpload();
         },
         updateFileId(newFileId) {
             this.form.file_id = newFileId;

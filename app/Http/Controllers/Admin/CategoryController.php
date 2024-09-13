@@ -11,11 +11,9 @@ use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
@@ -96,13 +94,10 @@ class CategoryController extends Controller
     {
         DB::beginTransaction();
         try {
-            // Kategori bulunuyor
             $category = Category::findOrFail($category->id);
 
-            // Kategoriye bağlı ürünler arasındaki ilişkiler pivot tablosundan siliniyor
             $category->products()->detach();
 
-            // Kategori siliniyor
             $category->delete();
 
             DB::commit();

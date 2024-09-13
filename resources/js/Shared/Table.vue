@@ -1,14 +1,45 @@
 <template>
-    <DataTable :value="items" tableStyle="min-width: 50rem" paginator :rows="10" :rowsPerPageOptions="[10, 20, 50]"
-        :sortOrder="sortOrder" @sort="onSort">
-        <Column field="id" header="ID"></Column>
-        <Column field="title" header="BAŞLIK"></Column>
-        <Column field="title" header="RESİM">
+    <DataTable v-model:filters="filters" :value="itemsWithCategoryTitles" tableStyle="min-width: 50rem" stripedRows
+        showGridlines paginator :rows="10" :rowsPerPageOptions="[10, 20, 50]" :sortOrder="sortOrder" @sort="onSort"
+        filterDisplay="menu" :loading="loading" :globalFilterFields="['title', 'price', 'categoryTitles']">
+
+        <template #header>
+            <div class="d-flex justify-content-between">
+                <Button type="button" label="Filtreyi Temizle" outlined @click="clearFilter()" />
+                <IconField>
+                    <InputText v-model="filters['global'].value" placeholder="Arama Yap..." />
+                </IconField>
+            </div>
+        </template>
+
+        <template #empty> Kayıt bulunamadı. </template>
+        <template #loading> Yükleniyor. Lütfen bekleyiniz. </template>
+
+        <Column field="id" header="ID" style="width: 20px"></Column>
+
+        <Column field="file_id" header="RESİM" style="width: 50px">
             <template #body="slotProps">
-                <img :src="slotProps.data.file.orj_link" class="w-24 rounded" style="height: 60px;" />
+                <img :src="slotProps.data.file.orj_link" class="w-24 rounded preview_image" />
             </template>
         </Column>
-        <Column header="İŞLEMLER">
+
+        <Column field="title" header="BAŞLIK" filterField="title"></Column>
+
+        <Column v-if="hasPrice" field="price" header="FİYAT" filterField="price">
+            <template #body="slotProps">
+                <span>{{ slotProps.data.price }}₺</span>
+            </template>
+        </Column>
+
+        <Column v-if="hasCategories" field="categoryTitles" header="KATEGORİLER" filterField="categoryTitles">
+            <template #body="slotProps">
+                <span v-for="(category, index) in slotProps.data.categories" :key="category.id">
+                    {{ category.title }}<span v-if="index < slotProps.data.categories.length - 1">,</span>
+                </span>
+            </template>
+        </Column>
+
+        <Column header="İŞLEMLER" style="width: 15%">
             <template #body="slotProps">
                 <span>
                     <LoadingButton @click="deleteItem(slotProps.data)" :loading="loadingIds.includes(slotProps.data.id)"
@@ -22,6 +53,7 @@
                 </span>
             </template>
         </Column>
+
         <template #footer> Toplam {{ items.length }} kayıt. </template>
     </DataTable>
 </template>
@@ -32,12 +64,19 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import LoadingButton from '@/Shared/LoadingButton.vue';
 import axios from "axios";
+import { FilterMatchMode, FilterOperator } from '@primevue/core/api';
+import IconField from 'primevue/iconfield';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 
 export default {
     components: {
         LoadingButton,
         DataTable,
-        Column
+        Column,
+        IconField,
+        InputText,
+        Button
     },
     props: {
         items: {
@@ -50,10 +89,42 @@ export default {
             sortField: 'id',
             sortOrder: 1,
             currentUrl: window.location.href,
-            loadingIds: []  // Silme işlemi sırasında hangi öğenin yüklendiğini takip eder
+            loadingIds: [],
+            filters: {
+                global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+                title: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+                price: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+                categoryTitles: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] }
+            },
+            loading: false
         };
     },
+    computed: {
+        hasCategories() {
+            return this.items.some(item => item.categories && item.categories.length > 0);
+        },
+        hasPrice() {
+            return this.items.some(item => item.price);
+        },
+        itemsWithCategoryTitles() {
+            return this.items.map(item => ({
+                ...item,
+                categoryTitles: item.categories?.map(cat => cat.title).join(', ') || ''
+            }));
+        }
+    },
     methods: {
+        clearFilter() {
+            this.initFilters();
+        },
+        initFilters() {
+            this.filters = {
+                global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+                title: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+                price: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+                categoryTitles: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] }
+            };
+        },
         async deleteItem(item) {
             if (this.loadingIds.includes(item.id)) return;
 
@@ -74,13 +145,13 @@ export default {
                     : 'Bilinmeyen bir hata oluştu.';
                 this.$showAlert(message, "error");
             } finally {
-                this.loadingIds = this.loadingIds.filter(id => id !== item.id); // İşlem tamamlandı, loading id'sini kaldır
+                this.loadingIds = this.loadingIds.filter(id => id !== item.id);
             }
         },
         removeItem(itemId) {
             const index = this.items.findIndex(i => i.id === itemId);
             if (index !== -1) {
-                this.items.splice(index, 1); // Listeden öğeyi kaldır
+                this.items.splice(index, 1);
             }
         },
         updateItem(item) {
@@ -102,5 +173,11 @@ export default {
 .process_btn {
     display: inline-block;
     width: auto !important;
+}
+
+.preview_image {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
 }
 </style>

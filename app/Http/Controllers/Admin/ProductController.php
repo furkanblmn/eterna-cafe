@@ -12,7 +12,6 @@ use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -26,7 +25,7 @@ class ProductController extends Controller
 
     public function index(IndexRequest $request)
     {
-        $data['products'] = Product::where('user_id', Auth::id())->with('file')->get();
+        $data['products'] = Product::where('user_id', Auth::id())->with(['file', 'categories'])->get();
 
         return Inertia::render('Products/Index', $data);
     }

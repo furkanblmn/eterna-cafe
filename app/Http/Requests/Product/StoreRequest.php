@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
             'file_id' => ['required', 'exists:files,id'],
-            'price' => ['nullable', 'numeric', 'min:0'],
+            'price' => ['required', 'numeric', 'min:0'],
             'categories' => ['required', 'array'],
             'categories.*' => ['exists:categories,id'],
         ];
@@ -50,6 +50,7 @@ class StoreRequest extends FormRequest
             'file_id.required' => 'Dosya seçmek zorunludur.',
             'file_id.exists' => 'Seçilen dosya mevcut değil.',
 
+            'price.required' => 'Fiyat alanı zorunludur.',
             'price.numeric' => 'Fiyat sayısal olmalıdır.',
             'price.min' => 'Fiyat sıfırdan küçük olamaz.',
 

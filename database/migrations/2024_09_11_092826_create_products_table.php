@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('file_id');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->double('price', 15, 2)->nullable()->default(11.11);
+            $table->double('price', 15, 2)->default(11.11);
             $table->longText('content');
             $table->timestamps();
             $table->softDeletes();

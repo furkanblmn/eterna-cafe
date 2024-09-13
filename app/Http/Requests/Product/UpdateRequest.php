@@ -24,8 +24,8 @@ class UpdateRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
-            'price' => ['nullable', 'numeric', 'min:0'],
-            'file_id' => ['nullable', 'exists:files,id'],
+            'price' => ['numeric', 'min:0'],
+            'file_id' => ['exists:files,id'],
             'categories' => ['required', 'array'],
             'categories.*' => ['exists:categories,id'],
         ];
@@ -46,10 +46,12 @@ class UpdateRequest extends FormRequest
             'content.required' => 'İçerik alanı zorunludur.',
             'content.string' => 'İçerik metin türünde olmalıdır.',
 
+            'file_id.required' => 'Dosya seçmek zorunludur.',
+            'file_id.exists' => 'Seçilen dosya mevcut değil.',
+
+            'price.required' => 'Fiyat alanı zorunludur.',
             'price.numeric' => 'Fiyat sayısal olmalıdır.',
             'price.min' => 'Fiyat sıfırdan küçük olamaz.',
-
-            'file_id.exists' => 'Seçilen dosya mevcut değil.',
 
             'categories.required' => 'En az bir kategori seçilmelidir.',
             'categories.array' => 'Kategoriler geçerli bir dizi olmalıdır.',

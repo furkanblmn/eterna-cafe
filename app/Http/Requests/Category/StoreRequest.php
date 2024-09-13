@@ -28,4 +28,21 @@ class StoreRequest extends FormRequest
             'file_id' => ['required', 'exists:files,id'],
         ];
     }
+
+    /**
+     * Get custom messages for validation errors.
+     *
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Başlık alanı zorunludur.',
+            'title.string' => 'Başlık metin türünde olmalıdır.',
+            'title.max' => 'Başlık en fazla 255 karakter uzunluğunda olabilir.',
+
+            'file_id.required' => 'Dosya seçmek zorunludur.',
+            'file_id.exists' => 'Seçilen dosya mevcut değil.',
+        ];
+    }
 }
