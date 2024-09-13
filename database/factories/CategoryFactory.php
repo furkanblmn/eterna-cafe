@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User; // User modelini ekliyoruz
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,10 +17,11 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        // Her kategori belirli bir kullanıcıya ait olacak şekilde tanımlanır
         return [
-            'user_id' => User::query()->inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id, // Rastgele bir kullanıcı
             'title' => $this->faker->word,
-            'file_path' => $this->faker->imageUrl(480, 480, 'categories', true),
+            'file_id' => rand(1, 2),
         ];
     }
 }

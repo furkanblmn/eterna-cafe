@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\File;
 use App\Models\Newsletter;
 use App\Models\Product;
 use App\Models\User;
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $file = File::factory()->create();
         $users = User::factory(3)->create();
         $categories = Category::factory(10)->create();
         $products = Product::factory(50)->create();

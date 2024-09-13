@@ -5,21 +5,20 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // Kayıt
-Route::get('/register', function () {
-    return Inertia::render('Auth/Register');
-})->name('register');
-Route::post('/register', [AuthController::class, 'register']);
 
-// Giriş
-Route::get('/login', function () {
-    return Inertia::render('Auth/Login');
-})->name('login');
-Route::post('/login', [AuthController::class, 'login']);
 
-// Çıkış
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/register', 'register_page');
+    Route::post('/register', 'register');
 
-// Dashboard (giriş sonrası)
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware('auth')->name('dashboard');
+    Route::get('/login', 'login_page')->name('login');
+    Route::post('/login', 'login');
+
+    Route::get('/password/forgot', 'forgot_page');
+    Route::post('/password/forgot', 'reset_password');
+
+    Route::get('/password/update', 'update_pass_page');
+    Route::post('/password/update', 'update_password');
+
+    Route::get('/logout', 'logout');
+});

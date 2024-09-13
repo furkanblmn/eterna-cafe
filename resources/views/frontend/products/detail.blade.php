@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <img src="{{ $product->file_path }}" alt="{{ $product->title }}" class="product-image">
+                <img src="{{ $product->file->orj_link }}" alt="{{ $product->title }}" class="product-image">
             </div>
         </div>
 

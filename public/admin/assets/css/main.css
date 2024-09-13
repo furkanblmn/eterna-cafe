@@ -1,0 +1,87 @@
+/* Form container genel yapı */
+.form-container {
+    max-width: 400px;
+    width: 45vw;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Form başlığı */
+.form-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Her form elemanı için grup */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Etiketlerin görünümü */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Form input alanları */
+.form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: #333;
+}
+
+/* Form butonu */
+.form-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+    background-color: #555;
+}
+
+/* Genel form yapısı */
+.form-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.background-image {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    z-index: -1;
+}
+.background_blue{
+    background-color: rgba(17, 45, 105, .85);
+}
+.form-wrapper{
+    width: 100vw;
+    height: 100vh;
+}
+table.dataTable{
+    min-height: 485px !important;
+}

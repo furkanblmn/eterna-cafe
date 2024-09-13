@@ -1,14 +1,18 @@
 <?php
 
-use Inertia\Middleware;
-use Inertia\Inertia;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
-// Inertia middleware sadece dashboard rotaları için
-Route::middleware(['web', Middleware::class])->group(function () {
-    Route::get('/admin', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
 
-    // Diğer dashboard rotaları...
+Route::middleware(['auth'])->name('admin.')->prefix('dashboard')->group(function () {
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/', 'index')->name('home.index');
+    });
+
+    Route::resource('/categories', CategoryController::class);
+    Route::resource('/products', ProductController::class);
+    Route::resource('/file', FileController::class);
 });

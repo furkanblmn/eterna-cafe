@@ -12,6 +12,8 @@ class Product extends Model
 {
     use HasFactory, HasSlug, SoftDeletes;
 
+    protected $guarded = [];
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -22,5 +24,10 @@ class Product extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'product_categories');
+    }
+
+    public function file()
+    {
+        return $this->belongsTo(File::class);
     }
 }

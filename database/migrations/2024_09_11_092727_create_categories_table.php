@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->integer('file_id');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('file_path');
             $table->timestamps();
             $table->softDeletes();
         });

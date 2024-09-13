@@ -1,0 +1,19 @@
+{
+  "\u0000plugin-vue:export-helper": [],
+  "resources/js/Pages/Auth/Login.vue": [],
+  "resources/js/Pages/Auth/Register.vue": [],
+  "resources/js/Pages/Categories/CreateEdit.vue": [],
+  "resources/js/Pages/Categories/Index.vue": [],
+  "resources/js/Pages/Dashboard.vue": [],
+  "resources/js/Pages/Products/CreateEdit.vue": [],
+  "resources/js/Pages/Products/Index.vue": [],
+  "resources/js/Shared/FileUploader.vue": [],
+  "resources/js/Shared/FileUploader.vue?vue&type=style&index=0&scoped=1406bbab&lang.css": [],
+  "resources/js/Shared/Layout.vue": [],
+  "resources/js/Shared/LoadingButton.vue": [],
+  "resources/js/Shared/SaveButtonWrapper.vue": [],
+  "resources/js/Shared/SideBar.vue": [],
+  "resources/js/Shared/Table.vue": [],
+  "resources/js/Shared/Table.vue?vue&type=style&index=0&scoped=ee7f329c&lang.css": [],
+  "resources/js/ssr.js": []
+}

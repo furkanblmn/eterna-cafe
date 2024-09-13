@@ -1,17 +1,22 @@
 <template>
-    <div>
-        <h1>Dashboard</h1>
-        <p>Hoş geldiniz, {{ user.name }}!</p>
-        <form method="POST" action="/logout">
-            <button type="submit">Çıkış Yap</button>
-        </form>
-    </div>
+    <Head title="Yönetim Paneli" />
+
 </template>
 
 <script>
+import Layout from '@/Shared/Layout.vue'
+
 export default {
-    props: {
-        user: Object
+    data() {
+        return {
+            form: {
+                email: '',
+                password: '',
+            }
+        };
+    },
+    layout: Layout,
+    methods: {
     }
-}
+};
 </script>

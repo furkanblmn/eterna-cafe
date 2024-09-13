@@ -17,7 +17,7 @@
                         <div class="card h-100">
                             <a
                                 href="{{ route('frontend.categories.products', ['username' => $user->slug, 'category' => $category->slug]) }}">
-                                <img src="{{ $category->file_path }}" class="cover-image" alt="{{ $category->title }}">
+                                <img src="{{ $category->file->orj_link }}" class="cover-image" alt="{{ $category->title }}">
                             </a>
                             <div class="card-body text-center">
                                 <h5 class="card-title">{{ $category->title }}</h5>
