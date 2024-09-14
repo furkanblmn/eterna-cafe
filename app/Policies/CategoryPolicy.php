@@ -37,9 +37,6 @@ class CategoryPolicy
         return $user->id === $category->user_id;
     }
 
-    /**
-     * Kullanıcı sadece kendi kategorilerini listeleyebilir.
-     */
     public function viewAny(User $user)
     {
         return Auth::check();

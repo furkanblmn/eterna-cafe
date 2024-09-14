@@ -7,21 +7,21 @@ use Illuminate\Console\Command;
 class CreateUploadsSymlink extends Command
 {
     /**
-     * The name and signature of the console command.
+     * Konsol komutunun adı ve imzası.
      *
      * @var string
      */
     protected $signature = 'storage:uploads-link';
 
     /**
-     * The console command description.
+     * Konsol komutunun açıklaması.
      *
      * @var string
      */
-    protected $description = 'Create a symbolic link from "storage/uploads" to "public/uploads"';
+    protected $description = '"storage/uploads" ile "public/uploads" arasında sembolik bağlantı oluştur';
 
     /**
-     * Execute the console command.
+     * Konsol komutunu çalıştır.
      *
      * @return int
      */
@@ -31,7 +31,7 @@ class CreateUploadsSymlink extends Command
         $publicPath = public_path('uploads');
 
         if (file_exists($publicPath)) {
-            $this->error('The "public/uploads" directory already exists.');
+            $this->error('"public/uploads" dizini zaten mevcut.');
             return Command::FAILURE;
         }
 
@@ -39,10 +39,10 @@ class CreateUploadsSymlink extends Command
         symlink($storagePath, $publicPath);
 
         if (file_exists($publicPath)) {
-            $this->info('The "storage/uploads" directory has been linked to "public/uploads".');
+            $this->info('"storage/uploads" dizini, "public/uploads" dizinine başarıyla bağlandı.');
             return Command::SUCCESS;
         } else {
-            $this->error('Failed to create the symlink.');
+            $this->error('Sembolik bağlantı oluşturulamadı.');
             return Command::FAILURE;
         }
     }

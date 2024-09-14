@@ -14,17 +14,10 @@
             @if (count($user->categories))
                 @foreach ($user->categories as $category)
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <a
-                                href="{{ route('frontend.categories.products', ['username' => $user->slug, 'category' => $category->slug]) }}">
-                                <img src="{{ $category->file->orj_link }}" class="cover-image" alt="{{ $category->title }}">
-                            </a>
-                            <div class="card-body text-center">
-                                <h5 class="card-title">{{ $category->title }}</h5>
-                                <a href="{{ route('frontend.categories.products', ['username' => $user->slug, 'category' => $category->slug]) }}"
-                                    class="btn btn-primary mt-3">Ürünleri Gör</a>
-                            </div>
-                        </div>
+                        <x-item-card :title="$category->title" :image-url="$category->file->orj_link" btnText="Ürünleri Gör" :detail-url="route('frontend.categories.products', [
+                            'username' => $user->slug,
+                            'category' => $category->slug,
+                        ])" />
                     </div>
                 @endforeach
             @else

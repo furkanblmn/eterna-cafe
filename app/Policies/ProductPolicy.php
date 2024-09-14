@@ -37,9 +37,6 @@ class ProductPolicy
         return $user->id === $product->user_id;
     }
 
-    /**
-     * Kullanıcı sadece kendi ürünlerini listeleyebilir.
-     */
     public function viewAny(User $user)
     {
         return Auth::check();

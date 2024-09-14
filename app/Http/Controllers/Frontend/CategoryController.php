@@ -16,17 +16,18 @@ class CategoryController extends Controller
         $this->data['pageTitle'] = "Kategoriler";
     }
 
-
-    function index($username)
+    public function index($username)
     {
-        $this->data['user'] = User::with('categories')->where('slug', $username)->first();
+        $this->data['user'] = User::with('categories')->where('slug', $username)->firstOrFail();
         return view('frontend.categories.list', $this->data);
     }
 
-    function products($username, $category)
+    public function products($username, $category)
     {
-        $this->data['user'] = User::where('slug', $username)->first();
-        $this->data['category'] = Category::with('products')->where('slug', $category)->first();
+        $this->data['user'] = User::where('slug', $username)->firstOrFail();
+
+        $this->data['category'] = Category::with('products')->where('slug', $category)->firstOrFail();
+
         return view('frontend.products.list', $this->data);
     }
 }

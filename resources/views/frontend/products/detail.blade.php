@@ -30,6 +30,34 @@
             </div>
         </div>
 
+        <div class="similar-product my-5">
+            <h4 class="title mb-3">Benzer Ürünler</h4>
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    @foreach ($similar_products as $similar)
+                        <div class="swiper-slide">
+                            <x-item-card :title="$similar->title" :image-url="$similar->file->orj_link" btnText="Detaya Bak" :detail-url="route('frontend.products.detail', [
+                                'username' => $user->slug,
+                                'category' => $category->slug,
+                                'product' => $similar->slug,
+                            ])" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 
+@endsection
+@section('js')
+    <script>
+        new Swiper(".mySwiper", {
+            slidesPerView: 4,
+            spaceBetween: 30,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
 @endsection

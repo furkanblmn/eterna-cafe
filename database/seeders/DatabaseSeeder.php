@@ -17,10 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $file = File::factory()->create();
+        $file = $this->call([FileSeeder::class,]);
         $users = User::factory(3)->create();
         $categories = Category::factory(10)->create();
         $products = Product::factory(50)->create();
-
     }
 }

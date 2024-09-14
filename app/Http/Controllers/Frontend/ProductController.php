@@ -19,10 +19,12 @@ class ProductController extends Controller
 
     function index($username, $category, $product)
     {
-
-        $this->data['user'] = User::where('slug', $username)->first();
-        $this->data['category'] = Category::where('slug', $category)->first();
-        $this->data['product'] = Product::where('slug', $product)->first();
+        $this->data['user'] = User::where('slug', $username)->firstOrFail();
+        $this->data['category'] = Category::where('slug', $category)->firstOrFail();
+        $this->data['product'] = Product::where('slug', $product)->firstOrFail();
+        $this->data['similar_products'] = Product::whereHas('categories', function ($query) {
+            $query->where('slug', $this->data['category']->slug);
+        })->where('id', '!=', $this->data['product']->id)->limit(6)->get();
         return view('frontend.products.detail', $this->data);
     }
 }

@@ -9,8 +9,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ $user->username }}</h5>
-                            <p class="card-text">{{ $user->username }} restoranı hakkında bilgi için tıklayın.</p>
-                            <a href="{{ route('frontend.categories.list', ['username' => $user->slug]) }}" class="btn btn-primary">Detayları Gör</a>
+                            <p class="card-text">{{ $user->username }} restoranının ürünleri için tıklayın.</p>
+                            <a href="{{ route('frontend.categories.list', ['username' => $user->slug]) }}" class="btn btn-primary">Kategorileri Gör</a>
                         </div>
                     </div>
                 </div>
